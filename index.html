@@ -2,134 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Andes Consultores Digitales</title>
+<meta name="description" content="Programas que responden a tus clientes por WhatsApp en segundos, QR, calendario de citas y páginas web para tu negocio. Atiendo todo el Perú.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
 :root{
-  --bg:#f6f8fa; --fg:#13202b; --muted:#53636f; --card:#ffffff; --line:#d9e1e7;
-  --accent:#0b5d73; --accent-fg:#ffffff; --soft:#e3f0f3;
+  --bg:#f4f7f9; --fg:#12202a; --muted:#51626e; --card:#ffffff; --line:#d8e1e7;
+  --accent:#0b5d73; --accent-fg:#ffffff; --soft:#e2f0f3; --hero1:#0a3f50; --hero2:#0b6a82; --wa:#1fa855;
   --font-d:'Space Grotesk',system-ui,sans-serif; --font-b:'Inter',system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root{
-  --bg:#0e171d; --fg:#e8eef2; --muted:#9db0bc; --card:#16232b; --line:#26383f; --accent:#4fb6cf; --accent-fg:#06222b; --soft:#14303a; color-scheme:dark}}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-b);font-size:16px;line-height:1.6;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:860px;margin:0 auto;padding-block:40px 56px;display:flex;flex-direction:column;gap:44px}
+  --bg:#0d171c; --fg:#e8eef2; --muted:#9db0bc; --card:#15222a; --line:#26383f; --accent:#4fb6cf; --accent-fg:#06222b; --soft:#14303a; --hero1:#07252f; --hero2:#0a4556; color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-b);font-size:16px;line-height:1.6}
+.in{max-width:900px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--font-d);line-height:1.15;text-wrap:balance;margin:0}
-h1{font-size:clamp(1.9rem,6vw,2.9rem);font-weight:700}
-h2{font-size:1.5rem;font-weight:700;margin-bottom:14px}
-h3{font-size:1.15rem;font-weight:700}
-p{margin:0 0 10px;max-width:65ch}
-.eyebrow{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
-.lead{font-size:1.15rem;color:var(--muted);margin-top:16px}
-.btn{display:inline-block;background:var(--accent);color:var(--accent-fg);text-decoration:none;font-weight:600;padding:13px 22px;border-radius:8px;margin-top:18px}
-.btn:focus-visible{outline:3px solid var(--fg);outline-offset:2px}
-.note{color:var(--muted);font-size:.95rem}
-.list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.list li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
-.list b{display:block;font-family:var(--font-d);margin-bottom:2px}
-.pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.pk>div{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px;min-width:0;display:flex;flex-direction:column;gap:10px}
-.pk .mid{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.price{font-family:var(--font-d);font-size:1.7rem;font-weight:700}
-.price small{display:block;font-family:var(--font-b);font-size:.9rem;font-weight:500;color:var(--muted)}
+h2{font-size:1.65rem;font-weight:700;margin-bottom:8px}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0 0 10px}
+.top{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.brand{font-family:var(--font-d);font-weight:700;font-size:1.02rem}
+.pill{background:var(--wa);color:#fff;text-decoration:none;font-weight:600;font-size:.92rem;padding:9px 16px;border-radius:999px;white-space:nowrap}
+.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff}
+.hero .in{padding-block:64px 56px}
+.kicker{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;opacity:.85;margin-bottom:14px}
+.hero h1{font-family:var(--font-d);font-size:clamp(2rem,6.4vw,3.3rem);font-weight:700;line-height:1.08;text-wrap:balance;max-width:17ch}
+.hero .lead{font-size:1.15rem;max-width:56ch;margin-top:18px;opacity:.93}
+.cta{display:inline-block;background:#fff;color:var(--hero1);text-decoration:none;font-weight:700;padding:14px 26px;border-radius:10px;margin-top:26px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.chips span{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;font-size:.88rem}
+section{padding-block:44px 0}
+.sub{color:var(--muted);margin-bottom:22px;max-width:62ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
+.card b{display:block;font-family:var(--font-d);font-size:1.05rem;margin-bottom:6px}
+.card p{color:var(--muted);font-size:.96rem;margin:0}
+.dot{width:38px;height:38px;border-radius:10px;background:var(--soft);color:var(--accent);display:grid;place-items:center;font-family:var(--font-d);font-weight:700;margin-bottom:12px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;counter-reset:s}
+.steps .card{counter-increment:s}
+.steps .card::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-family:var(--font-d);font-weight:700;margin-bottom:12px}
+.pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.pk .card{display:flex;flex-direction:column;gap:10px;padding:24px}
+.pk .mid{border:2px solid var(--accent)}
+.tag{align-self:flex-start;background:var(--accent);color:var(--accent-fg);font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:999px}
+.price{font-family:var(--font-d);font-size:2rem;font-weight:700}
+.price small{display:block;font-family:var(--font-b);font-size:.92rem;font-weight:500;color:var(--muted)}
 .pk ul{margin:0;padding-left:18px;color:var(--muted);font-size:.95rem}
-.band{background:var(--soft);border-radius:8px;padding:22px}
-.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
-.steps li::before{content:counter(s);font-family:var(--font-d);font-weight:700;background:var(--accent);color:var(--accent-fg);width:34px;height:34px;border-radius:50%;display:grid;place-items:center}
-footer{border-top:1px solid var(--line);padding-top:20px}
+.band{background:var(--soft);border-radius:14px;padding:26px;margin-top:44px}
+.final{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;border-radius:16px;padding:36px 26px;margin-top:48px;text-align:center}
+.final h2{color:#fff}
+.final p{opacity:.92;max-width:50ch;margin-inline:auto}
+.final .cta{background:var(--wa);color:#fff}
+footer{padding-block:28px 40px;color:var(--muted);font-size:.9rem;text-align:center}
+.float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:var(--wa);color:#fff;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:6}
+a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
-<main class="wrap">
-  <header>
-    <div class="eyebrow">Andes Consultores Digitales</div>
-    <h1>Que ningún cliente que te escribe se quede sin respuesta</h1>
-    <p class="lead">Soy Piero. Instalo un programa en tu WhatsApp e Instagram que responde cada consulta en segundos, a cualquier hora, y la lleva hasta una cita o una venta. Atiendo a negocios de todo el Perú.</p>
-    <a class="btn" id="wa-top" href="#contacto">Hablemos 10 minutos</a>
-  </header>
+<div class="top"><div class="in">
+  <div class="brand">Andes Consultores Digitales</div>
+  <a class="pill wa" href="#">WhatsApp</a>
+</div></div>
 
+<header class="hero"><div class="in">
+  <div class="kicker">Para negocios de todo el Perú</div>
+  <h1>Que ningún cliente que te escribe se quede sin respuesta</h1>
+  <p class="lead">Soy Piero. Instalo un programa en tu WhatsApp e Instagram que responde cada consulta en segundos, a cualquier hora, y la lleva hasta una cita o una venta.</p>
+  <a class="cta wa" href="#">Hablemos 10 minutos</a>
+  <div class="chips"><span>Respuesta en segundos</span><span>Atiende de noche y fines de semana</span><span>Todo el Perú</span></div>
+</div></header>
+
+<main class="in">
   <section>
     <h2>El problema que resuelvo</h2>
-    <p>Un cliente escribe por WhatsApp y nadie contesta a tiempo. Si se demora, escribe a otro negocio. Atender todo el día cuesta tiempo, y de noche o en fin de semana nadie responde.</p>
-    <p>Un programa inteligente responde por ti, con el tono de tu negocio, y avisa cuando hace falta una persona.</p>
-  </section>
-
-  <section>
-    <h2>Qué hace por tu negocio</h2>
-    <ul class="list">
-      <li><b>Responde en segundos</b>Precios, horarios, ubicación y preguntas frecuentes, a cualquier hora.</li>
-      <li><b>Agenda citas y pedidos</b>Toma los datos del cliente y te los deja ordenados.</li>
-      <li><b>Recuerda y da seguimiento</b>Avisa al cliente de su cita, escribe si hubo una llamada perdida y vuelve a contactar a clientes antiguos.</li>
-      <li><b>Pide reseñas</b>Invita a tus clientes contentos a dejar su reseña en Google.</li>
-    </ul>
+    <p class="sub">Un cliente escribe por WhatsApp y nadie contesta a tiempo. Si se demora, escribe a otro negocio. Atender todo el día cuesta tiempo, y de noche o en fin de semana nadie responde. Un programa inteligente responde por ti, con el tono de tu negocio, y avisa cuando hace falta una persona.</p>
+    <div class="grid">
+      <div class="card"><div class="dot">1</div><b>Responde en segundos</b><p>Precios, horarios, ubicación y preguntas frecuentes, a cualquier hora.</p></div>
+      <div class="card"><div class="dot">2</div><b>Agenda citas y pedidos</b><p>Toma los datos del cliente y te los deja ordenados.</p></div>
+      <div class="card"><div class="dot">3</div><b>Recuerda y da seguimiento</b><p>Avisa al cliente de su cita, escribe si hubo una llamada perdida y vuelve a contactar a clientes antiguos.</p></div>
+      <div class="card"><div class="dot">4</div><b>Pide reseñas</b><p>Invita a tus clientes contentos a dejar su reseña en Google.</p></div>
+    </div>
   </section>
 
   <section>
     <h2>Qué puedo instalar en tu negocio</h2>
-    <ul class="list">
-      <li><b>Programa que conversa de forma natural</b>No es un menú de botones. Lee lo que tu cliente escribe, entiende lo que pide y le responde con el tono de tu negocio. Cuando hace falta una persona, te avisa.</li>
-      <li><b>QR de carta y pedidos por WhatsApp</b>Para restaurantes y locales. El cliente escanea, ve la carta y pide sin esperar al mozo ni llamar.</li>
-      <li><b>QR de reseñas en Google</b>Un QR en la mesa o el mostrador para que tus clientes contentos dejen su reseña en segundos.</li>
-      <li><b>QR para cotización y citas</b>Para talleres y servicios. El cliente escanea, escribe su consulta y recibe una respuesta automática que pide los datos necesarios (por ejemplo placa, modelo y falla).</li>
-      <li><b>Calendario de citas</b>Ordena tu horario en un solo lugar. Tus clientes reservan, ven si su cita está confirmada y reciben su recordatorio.</li>
-      <li><b>Recordatorios a clientes antiguos</b>Mensajes para que vuelvan, como el aviso de mantenimiento.</li>
-      <li><b>Páginas web</b>Una página clara con tus servicios y un botón directo a tu WhatsApp.</li>
-    </ul>
-    <p class="note">Si te interesa alguno de estos, lo vemos en la llamada.</p>
+    <p class="sub">Si te interesa alguno de estos, lo vemos en la llamada.</p>
+    <div class="grid">
+      <div class="card"><b>Programa que conversa de forma natural</b><p>No es un menú de botones. Lee lo que tu cliente escribe, entiende lo que pide y le responde con el tono de tu negocio. Cuando hace falta una persona, te avisa.</p></div>
+      <div class="card"><b>QR de carta y pedidos por WhatsApp</b><p>Para restaurantes y locales. El cliente escanea, ve la carta y pide sin esperar al mozo ni llamar.</p></div>
+      <div class="card"><b>QR de reseñas en Google</b><p>Un QR en la mesa o el mostrador para que tus clientes contentos dejen su reseña en segundos.</p></div>
+      <div class="card"><b>QR para cotización y citas</b><p>Para talleres y servicios. El cliente escanea, escribe su consulta y recibe una respuesta automática que pide los datos necesarios (por ejemplo placa, modelo y falla).</p></div>
+      <div class="card"><b>Calendario de citas</b><p>Ordena tu horario en un solo lugar. Tus clientes reservan, ven si su cita está confirmada y reciben su recordatorio.</p></div>
+      <div class="card"><b>Recordatorios a clientes antiguos</b><p>Mensajes para que vuelvan, como el aviso de mantenimiento.</p></div>
+      <div class="card"><b>Páginas web</b><p>Una página clara con tus servicios y un botón directo a tu WhatsApp.</p></div>
+    </div>
   </section>
 
   <section>
     <h2>Cómo trabajamos</h2>
-    <ol class="steps">
-      <li><div><b>Llamada de 10 minutos.</b> Me cuentas cómo atiendes hoy a tus clientes.</div></li>
-      <li><div><b>Elegimos un paquete</b> según lo que necesites.</div></li>
-      <li><div><b>Lo instalo y lo pruebo contigo.</b> Tú sigues atendiendo tu negocio.</div></li>
-      <li><div><b>Lo vigilo cada mes</b> y lo mejoro cuando algo cambie.</div></li>
-    </ol>
+    <p class="sub">Tú sigues atendiendo tu negocio. Yo me encargo del resto.</p>
+    <div class="steps">
+      <div class="card"><b>Llamada de 10 minutos</b><p>Me cuentas cómo atiendes hoy a tus clientes.</p></div>
+      <div class="card"><b>Elegimos un paquete</b><p>Según lo que necesites.</p></div>
+      <div class="card"><b>Lo instalo y lo pruebo contigo</b><p>Lo dejamos funcionando juntos.</p></div>
+      <div class="card"><b>Lo vigilo cada mes</b><p>Y lo mejoro cuando algo cambie.</p></div>
+    </div>
   </section>
 
   <section>
     <h2>Paquetes y precios</h2>
-    <p class="note">Precio de lanzamiento para mis primeros 3 clientes. Montos en soles.</p>
+    <p class="sub">Precio de lanzamiento para mis primeros 3 clientes. Montos en soles.</p>
     <div class="pk">
-      <div>
+      <div class="card">
         <h3>Entrada</h3>
         <div class="price">S/800<small>instalación + S/300 al mes</small></div>
         <ul><li>Responde WhatsApp e Instagram en segundos, a cualquier hora</li><li>Agenda</li></ul>
       </div>
-      <div class="mid">
+      <div class="card mid">
+        <span class="tag">Más elegido</span>
         <h3>Intermedio</h3>
         <div class="price">S/1,400<small>instalación + S/450 al mes</small></div>
         <ul><li>Todo lo de Entrada</li><li>Recordatorio de cita</li><li>Mensaje automático tras llamada perdida</li><li>Reseñas automáticas</li></ul>
       </div>
-      <div>
+      <div class="card">
         <h3>Completo</h3>
         <div class="price">S/2,200<small>instalación + S/700 al mes</small></div>
         <ul><li>Todo lo de Intermedio</li><li>Reactivación de clientes antiguos</li><li>Seguimiento y recompra a los 30 días</li><li>Reporte mensual</li></ul>
       </div>
     </div>
+    <div class="band">
+      <h3>Por qué hay un pago mensual</h3>
+      <p style="margin-top:8px">Cubre las herramientas que se pagan cada mes para que tu negocio responda solo, la vigilancia y mejora del programa, y mi atención cuando algo cambie. Con que te recupere un solo cliente al mes, ya se pagó.</p>
+      <p><b>Garantía:</b> si en 30 días el programa no responde a tus clientes en segundos, te devuelvo lo cobrado.</p>
+    </div>
   </section>
 
-  <section class="band">
-    <h2>Por qué hay un pago mensual</h2>
-    <p>Cubre las herramientas que se pagan cada mes para que tu negocio responda solo, la vigilancia y mejora del programa, y mi atención cuando algo cambie. Con que te recupere un solo cliente al mes, ya se pagó.</p>
-    <p><b>Garantía:</b> si en 30 días el programa no responde a tus clientes en segundos, te devuelvo lo cobrado.</p>
-  </section>
-
-  <section id="contacto">
+  <div class="final">
     <h2>Hablemos</h2>
     <p>Cuéntame cómo se llama tu negocio y en qué ciudad está. Te respondo yo mismo, y coordinamos una llamada corta.</p>
-    <a class="btn" id="wa-main" href="https://wa.me/51981611549?text=Hola%20Piero%2C%20vi%20tu%20p%C3%A1gina%20de%20Andes%20Consultores%20Digitales%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n.">Escríbeme por WhatsApp</a>
-    <p class="note">WhatsApp: +51 981 611 549</p>
-  </section>
-
-  <footer class="note">Piero · Andes Consultores Digitales · Perú</footer>
+    <a class="cta wa" href="#">Escríbeme por WhatsApp</a>
+    <p style="margin-top:14px">+51 981 611 549</p>
+  </div>
 </main>
+
+<footer>Piero · Andes Consultores Digitales · Perú</footer>
+<a class="float wa" href="#">WhatsApp</a>
 <script>
-document.getElementById("wa-top").href=document.getElementById("wa-main").href;
+var u="https://wa.me/51981611549?text="+encodeURIComponent("Hola Piero, vi tu página de Andes Consultores Digitales y quiero más información.");
+document.querySelectorAll("a.wa").forEach(function(a){a.href=u;a.target="_blank";a.rel="noopener"});
 </script>
 </body>
 </html>
