@@ -346,7 +346,7 @@ $("close-cart").onclick=function(){$("cartbg").hidden=true};$("cartbg").onclick=
 $("mesa").oninput=function(){this.value=this.value.replace(/\D/g,"").slice(0,3)};
 $("send").onclick=function(){var r=tally();if(!r.c)return;var m="Hola, quiero pedir ("+otype+(otype==="En mesa"&&$("mesa").value?" · Mesa "+$("mesa").value:"")+"):\n"+r.e.map(function(k){return cart[k].q+" x "+k}).join("\n")+"\nTotal: S/ "+r.t;var n=$("nota").value.trim().slice(0,200);if(n)m+="\nNota: "+n;var u="https://wa.me/?text="+encodeURIComponent(m);window.open(u,"_blank","noopener")||(location.href=u)};
 /* QR de la carta (se genera en el navegador) */
-try{if(window.qrcode){var q=qrcode(0,"M");q.addData("https://andesconsultores-pe.github.io/demo-restaurante/#carta");q.make();$("qr").innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true})}}catch(e){}
+try{if(window.qrcode){var q=qrcode(0,"M");q.addData("https://andesconsultores-pe.github.io/demo-restaurante/?v=12&debug=1#carta");q.make();$("qr").innerHTML=q.createSvgTag({cellSize:4,margin:0,scalable:true})}}catch(e){}
 /* cookies */
 function consent(){try{return JSON.parse(sg("sa_consent"))}catch(e){return null}}
 function save(s){ss("sa_consent",JSON.stringify({necessary:true,stats:!!s,v:1,t:Date.now()}));$("ck").hidden=true;$("prefbg").hidden=true}
