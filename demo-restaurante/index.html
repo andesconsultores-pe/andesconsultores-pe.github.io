@@ -6,11 +6,12 @@
 <meta name="theme-color" content="#07181d">
 <meta name="color-scheme" content="dark light">
 <meta name="description" content="Demo de web y carta digital con QR para restaurantes. Negocio ficticio.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <title>Marea Demo Restaurante</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{--bg:#07181d;--bg2:#0d2630;--fg:#f3ecdd;--muted:#9bb0b3;--card:#0f2a33;--line:#24424c;--accent:#ff7a52;--accent-fg:#1c0a04;--gold:#f3c677;--ok:#4fd08a;--hd:'Fraunces',Georgia,serif;--bd:'Inter',system-ui,sans-serif;color-scheme:dark}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4eee2;--bg2:#ebe2d0;--fg:#0e2b33;--muted:#566b70;--card:#fffdf8;--line:#dccfb7;--accent:#e2512a;--accent-fg:#fff;--gold:#a8650c;--ok:#18864b;color-scheme:light}}
@@ -177,6 +178,12 @@ h1.big .ln span{transform:translateY(105%);animation:none}
 .rr .trk{fill:none;stroke:rgba(255,255,255,.14);stroke-width:3}
 .rr .rg{fill:none;stroke:#f3c677;stroke-width:3;stroke-linecap:round;stroke-dasharray:553;stroke-dashoffset:553}
 .rnum{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--hd);font-weight:900;font-size:clamp(4rem,16vw,8rem);letter-spacing:-.04em}
+.rr.gl{width:min(88vw,560px);aspect-ratio:1/1}
+.rr canvas{position:absolute;inset:-6%;width:112%;height:112%;display:none}
+.rr.gl canvas{display:block}
+.rr.gl svg{opacity:.3;transform:rotate(-90deg) scale(.82)}
+.rr.gl .rnum{align-items:flex-start;justify-content:flex-start;font-size:clamp(2rem,6vw,3.4rem);opacity:.9;inset:4% auto auto 4%}
+@media(max-width:799px){.rr.gl{width:min(92vw,420px)}.rword{font-size:clamp(3rem,13vw,6rem)}.rdesc{min-height:4.4em}}
 .rdots{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center}
 .rdots i{width:34px;height:3px;border-radius:3px;background:rgba(255,255,255,.25);transition:background .3s,width .3s}
 .rdots i.on{background:#f3c677;width:56px}
@@ -234,7 +241,7 @@ h1.big .ln span{transform:translateY(105%);animation:none}
 <section class="recipe" id="receta" aria-label="Cómo preparamos el cebiche">
 <div class="rsticky"><div class="rbg on"></div><div class="rbg"></div><div class="rbg"></div><div class="rbg"></div>
 <div class="gut" style="width:100%"><div class="in rwrap"><div class="rl"><small>Receta de la casa</small><div class="rword" id="rword"><span>Pescado</span></div><p class="rdesc" id="rdesc"></p></div>
-<div class="rr"><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="trk" cx="100" cy="100" r="88"/><circle class="rg" id="ring" cx="100" cy="100" r="88"/></svg><div class="rnum" id="rnum">01</div></div></div></div>
+<div class="rr" id="rr"><canvas id="dish3d" aria-label="Plato de cebiche que se arma al desplazarte" role="img"></canvas><svg viewBox="0 0 200 200" aria-hidden="true"><circle class="trk" cx="100" cy="100" r="88"/><circle class="rg" id="ring" cx="100" cy="100" r="88"/></svg><div class="rnum" id="rnum">01</div></div></div></div>
 <div class="rdots" id="rdots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div></div></section>
 
 <section id="platos" class="hz"><div class="hzs" id="hzs">
@@ -376,11 +383,12 @@ hero.addEventListener("pointermove",function(e){var r=hero.getBoundingClientRect
 new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(hero);
 var T=0;(function draw(){requestAnimationFrame(draw);if(!vis)return;T+=.016;c.clearRect(0,0,W,H);for(var i=0;i<ps.length;i++){var p=ps[i];p.y-=p.vy;p.x+=Math.sin(T+p.ph)*.4;var dx=p.x-mx,dy=p.y-my,d=Math.sqrt(dx*dx+dy*dy);if(d<140){p.x+=dx/d*(140-d)*.04;p.y+=dy/d*(140-d)*.04}
 if(p.y<-20)ps[i]=mk(false);c.globalAlpha=p.a*(0.6+0.4*Math.sin(T*2+p.ph));var s=p.r*2;c.drawImage(sp,p.x-p.r,p.y-p.r,s,s)}c.globalAlpha=1})()})();
+var recipeP=0;
 /* receta fijada */
 (function(){var sec=$("receta"),W=$("rword"),D=$("rdesc"),N=$("rnum"),R=$("ring"),dots=$("rdots").children,bgs=sec.querySelectorAll(".rbg");
 var S=[["Pescado","Fresco, del día. Cortado en dados al momento para que mantenga su textura."],["Limón","Exprimido al instante, nunca antes. Solo unos segundos: el limón cocina, no empapa."],["Ají limo","Molido en casa, con su punto de picante y ese aroma que se siente desde la puerta."],["Camote","Dulce y suave, para equilibrar el ácido. El final perfecto de cada bocado."]];
 var cur=-1;function setI(i){if(i===cur)return;cur=i;W.textContent="";var sp=document.createElement("span");sp.textContent=S[i][0];W.appendChild(sp);D.textContent=S[i][1];N.textContent="0"+(i+1);for(var k=0;k<4;k++){dots[k].classList.toggle("on",k===i);bgs[k].classList.toggle("on",k===i)}}
-function upd(){var r=sec.getBoundingClientRect(),tot=r.height-innerHeight;var p=Math.max(0,Math.min(1,-r.top/tot));setI(Math.min(3,Math.floor(p*4)));R.style.strokeDashoffset=String(553*(1-p))}
+function upd(){var r=sec.getBoundingClientRect(),tot=r.height-innerHeight;var p=Math.max(0,Math.min(1,-r.top/tot));recipeP=p;setI(Math.min(3,Math.floor(p*4)));R.style.strokeDashoffset=String(553*(1-p))}
 setI(0);addEventListener("scroll",upd,{passive:true});addEventListener("resize",upd);upd();
 if(reduce){sec.style.height="auto";sec.querySelector(".rsticky").style.position="relative";sec.querySelector(".rsticky").style.padding="80px 0"}})();
 /* platos: pin horizontal en escritorio + inclinación 3D */
@@ -389,6 +397,56 @@ function upd(){if(!pinned)return;var r=hz.getBoundingClientRect(),tot=hz.offsetH
 setup();addEventListener("resize",function(){setup();upd()});addEventListener("scroll",upd,{passive:true});upd();
 new IntersectionObserver(function(es){if(es[0].isIntersecting)rl.classList.add("on")},{threshold:.2}).observe(rl);
 if(fine&&!reduce){rl.querySelectorAll(".dish").forEach(function(d){var gl=document.createElement("div");gl.className="gl";d.appendChild(gl);d.addEventListener("pointermove",function(e){var r=d.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;d.classList.add("tl");d.style.transform="perspective(900px) rotateY("+((x-.5)*14)+"deg) rotateX("+(-(y-.5)*14)+"deg) translateZ(8px)";d.style.setProperty("--gx",x*100+"%");d.style.setProperty("--gy",y*100+"%")});d.addEventListener("pointerleave",function(){d.classList.remove("tl");d.style.transform=""})})}
+})();
+
+/* plato 3D que se arma con el scroll (three.js) */
+/* diagnostico: abrir con ?debug */
+var DBG=/debug/.test(location.search);function dbg(m){if(!DBG)return;var d=document.getElementById("dbgb");if(!d){d=document.createElement("div");d.id="dbgb";d.style.cssText="position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#000c;color:#0f0;font:12px monospace;padding:6px;white-space:pre-wrap";document.body.appendChild(d)}d.textContent+=m+"\n"}
+addEventListener("error",function(e){dbg("ERR "+e.message)});
+dbg("THREE="+(window.THREE?("r"+window.THREE.REVISION):"NO CARGO")+" reduce="+reduce+" w="+innerWidth);
+
+(function(){var T=window.THREE,cv=$("dish3d"),box=$("rr");if(!T||!cv)return;var rend;try{rend=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){try{rend=new T.WebGLRenderer({canvas:cv,antialias:false,alpha:true})}catch(e2){dbg("WebGL FALLO: "+e2.message);return}}
+box.classList.add("gl");dbg("GL ok, canvas "+cv.width+"x"+cv.height);rend.setPixelRatio(Math.min(innerWidth<800?1.5:2,devicePixelRatio||1));rend.outputEncoding=T.sRGBEncoding;rend.toneMapping=T.ACESFilmicToneMapping;rend.toneMappingExposure=.82;rend.setClearColor(0x000000,0);
+var scene=new T.Scene(),cam=new T.PerspectiveCamera(30,1,.1,60);cam.position.set(0,4.6,9.4);cam.lookAt(0,.25,0);
+scene.add(new T.HemisphereLight(0xcfe9ee,0x2a1a10,.55));
+var key=new T.DirectionalLight(0xffe4c4,1.5);key.position.set(3.5,6,3);scene.add(key);
+var rim=new T.PointLight(0x4cc3c9,22,18);rim.position.set(-4.5,2.5,-3.5);scene.add(rim);
+var warm=new T.PointLight(0xff7a52,18,16);warm.position.set(4,1.2,-4);scene.add(warm);
+var rot=new T.Group();scene.add(rot);
+var seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646}
+function mat(c,r,m){return new T.MeshStandardMaterial({color:c,roughness:r==null?.5:r,metalness:m||0,side:T.DoubleSide})}
+var prof=[[0,0],[1.0,0],[1.3,.04],[1.62,.14],[1.8,.27],[1.86,.31],[1.81,.33],[1.56,.22],[1.2,.14],[.8,.12],[0,.12]].map(function(a){return new T.Vector2(a[0],a[1])});
+var plate=new T.Mesh(new T.LatheGeometry(prof,72),mat(0x173540,.22,.15));rot.add(plate);
+var rg=new T.Mesh(new T.TorusGeometry(1.7,.012,8,96),mat(0xc9a15a,.3,.9));rg.rotation.x=Math.PI/2;rg.position.y=.3;rot.add(rg);
+var sc=document.createElement("canvas");sc.width=sc.height=128;var sx=sc.getContext("2d"),gr=sx.createRadialGradient(64,64,10,64,64,64);gr.addColorStop(0,"rgba(0,0,0,.55)");gr.addColorStop(1,"rgba(0,0,0,0)");sx.fillStyle=gr;sx.fillRect(0,0,128,128);
+var sh=new T.Mesh(new T.PlaneGeometry(4.6,4.6),new T.MeshBasicMaterial({map:new T.CanvasTexture(sc),transparent:true,depthWrite:false}));sh.rotation.x=-Math.PI/2;sh.position.y=-.02;scene.add(sh);
+var pieces=[];
+function add(mesh,g,end,erot,d){var start=new T.Vector3((rnd()-.5)*9,3+rnd()*4,(rnd()-.5)*9);var srot=new T.Euler(rnd()*6,rnd()*6,rnd()*6);mesh.position.copy(start);mesh.rotation.copy(srot);rot.add(mesh);pieces.push({m:mesh,g:g,sp:start,ep:end,sq:new T.Quaternion().setFromEuler(srot),eq:new T.Quaternion().setFromEuler(erot),d:d})}
+var cubeM=mat(0xf1dcc2,.5),cubeM2=mat(0xe8caa8,.55);
+for(var i=0;i<26;i++){var a=rnd()*6.28,r=Math.sqrt(rnd())*1.0,l=i<14?0:i<21?1:2;var m=new T.Mesh(new T.BoxGeometry(.24,.2,.24),i%2?cubeM:cubeM2);add(m,0,new T.Vector3(Math.cos(a)*r*(1-l*.25),.27+l*.19,Math.sin(a)*r*(1-l*.25)),new T.Euler(rnd()*.5,rnd()*6,rnd()*.5),i/30)}
+var lm=mat(0x8fbf2f,.5),lm2=mat(0xdcec7a,.55);
+[[1.15,.42,.55,.9],[-.35,.38,1.2,-.5],[.2,.42,-1.2,2.2]].forEach(function(c,i){var g=new T.Group();g.add(new T.Mesh(new T.CylinderGeometry(.42,.42,.07,48),lm));g.add(new T.Mesh(new T.CylinderGeometry(.36,.36,.075,48),lm2));for(var k=0;k<8;k++){var sp=new T.Mesh(new T.BoxGeometry(.015,.08,.36),lm);sp.rotation.y=k*Math.PI/8;g.add(sp)}add(g,1,new T.Vector3(c[0],c[1],c[2]),new T.Euler(1.1+(i-1)*.15,c[3],.2),i*.25)});
+var cm=mat(0xff8a1f,.45),cm2=mat(0xf3c230,.45);
+for(var i=0;i<5;i++){var m=new T.Mesh(new T.ConeGeometry(.075,.55,16),i%2?cm:cm2);var a=i*1.2+.4;add(m,2,new T.Vector3(Math.cos(a)*.55,.78+i*.03,Math.sin(a)*.55),new T.Euler(0,a,Math.PI/2+.2),i*.12)}
+var om=mat(0xb2346f,.4);
+for(var i=0;i<9;i++){var m=new T.Mesh(new T.TorusGeometry(.2+rnd()*.08,.022,8,28,Math.PI*1.3),om);var a=rnd()*6.28,r=rnd()*.6;add(m,2,new T.Vector3(Math.cos(a)*r,.9+rnd()*.15,Math.sin(a)*r),new T.Euler(Math.PI/2+(rnd()-.5)*.6,rnd()*6,0),.3+i*.07)}
+var gm=mat(0x2f9a45,.6);
+for(var i=0;i<10;i++){var m=new T.Mesh(new T.CircleGeometry(.11,5),gm);var a=rnd()*6.28,r=rnd()*.7;add(m,2,new T.Vector3(Math.cos(a)*r,1.02+rnd()*.08,Math.sin(a)*r),new T.Euler(-Math.PI/2+(rnd()-.5)*.8,rnd()*6,0),.5+i*.045)}
+var sm=mat(0xe58a2a,.5),sm2=mat(0xf0a948,.5);
+[[-1.1,.55],[-.9,-.45],[-1.35,-.2]].forEach(function(c,i){var m=new T.Mesh(new T.CylinderGeometry(.3,.3,.13,40),i%2?sm:sm2);add(m,3,new T.Vector3(c[0],.37+i*.04,c[1]),new T.Euler((rnd()-.5)*.25,rnd()*6,(rnd()-.5)*.25),i*.2)});
+var chm=mat(0xf4e6a3,.5);
+for(var i=0;i<4;i++){var m=new T.Mesh(new T.CylinderGeometry(.19,.19,.2,24),chm);var a=2.6+i*.35;add(m,3,new T.Vector3(Math.cos(a)*1.25,.36,Math.sin(a)*1.25),new T.Euler(0,a,Math.PI/2),.45+i*.1)}
+function ease(t){return 1-Math.pow(1-t,3)}function clamp(x){return Math.max(0,Math.min(1,x))}
+var sp=0,vis=false,tmpQ=new T.Quaternion(),W=0,H=0;
+function size(){var r=box.getBoundingClientRect();var w=Math.max(100,r.width*1.12),h=Math.max(100,r.height*1.12);if(Math.abs(w-W)>1||Math.abs(h-H)>1){W=w;H=h;rend.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}}
+new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(box);addEventListener("resize",size);size();
+var t0=performance.now();
+(function loop(now){requestAnimationFrame(loop);if(!vis)return;size();sp+=((reduce?1:recipeP)-sp)*.1;var tt=(now-t0)/1000;
+pieces.forEach(function(o){var gp=clamp(sp*4.15-o.g),k=clamp((gp-o.d*.55)/(1-o.d*.55*.9));var e=ease(k);o.m.visible=k>0.001;
+o.m.position.lerpVectors(o.sp,o.ep,e);if(k<1)o.m.position.y+=Math.sin(e*Math.PI)*.9;
+tmpQ.slerpQuaternions(o.sq,o.eq,e);o.m.quaternion.copy(tmpQ);o.m.scale.setScalar(.2+.8*clamp(k*2))});
+rot.rotation.y=sp*Math.PI*1.4+tt*.12;rot.rotation.x=Math.sin(tt*.4)*.03;cam.position.y=4.6-sp*.8;cam.position.z=9.4-sp*1.1;cam.lookAt(0,.3,0);
+rend.render(scene,cam)})(performance.now());
 })();
 /* chispas al agregar */
 function burst(el){if(reduce||!el||!el.getBoundingClientRect)return;var r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,cols=["#ff7a52","#f3c677","#4fd08a","#ffffff"];for(var i=0;i<16;i++){var d=document.createElement("div");d.className="burst";d.style.left=x+"px";d.style.top=y+"px";d.style.background=cols[i%4];document.body.appendChild(d);var a=Math.random()*6.28,dist=40+Math.random()*70;d.animate([{transform:"translate(-50%,-50%) scale(1)",opacity:1},{transform:"translate(calc(-50% + "+Math.cos(a)*dist+"px),calc(-50% + "+(Math.sin(a)*dist-20)+"px)) scale(.2)",opacity:0}],{duration:650+Math.random()*300,easing:"cubic-bezier(.2,.8,.2,1)"}).onfinish=(function(n){return function(){n.remove()}})(d)}
